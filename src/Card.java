@@ -57,7 +57,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return rank.getName() + " " + suit.getName();
+        return rank.getName() + " of " + suit.getName();
     }
 
     public boolean beats(Card another, Suit trump){

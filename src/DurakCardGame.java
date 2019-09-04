@@ -29,7 +29,7 @@ public class DurakCardGame {
 
             addCards(deck, attacker);
             addCards(deck, defender);
-            System.out.println(deck.returnSize());
+            System.out.println("The remaining number of cards in the deck is " + deck.returnSize());
             Card attack = attacker.attack(trump);
             System.out.println(attacker.getName() + " attacks with " + attack);
             Card defend = defender.defend(attack, trump);
