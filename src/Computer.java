@@ -1,7 +1,9 @@
 import sun.awt.geom.AreaOp;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class Computer extends Player{
     public Computer(String name, List<Card> hand) {
@@ -40,5 +42,29 @@ public class Computer extends Player{
         }
         hand.add(againstCart);
         return null;
+    }
+    public Card tossCard (List<Card> cardList) {
+        List<Card> tossCards = new ArrayList<>();
+        for (Card cardHand : hand) {
+            for (Card card : cardList) {
+                if (cardHand.getRank().getValue() == card.getRank().getValue()) {
+                    tossCards.add(cardHand);
+                }
+            }
+        }
+        if (tossCards.size() == 0){
+            System.out.println("Computer decided not to add cards ");
+            return null;
+        } else {
+            Random random = new Random();
+            int index = random.nextInt(tossCards.size());
+            if (index == tossCards.size()){
+                System.out.println("Computer decided to not add cards ");
+                return null;
+            } else {
+                Card card = tossCards.get(index );
+                return card;
+            }
+        }
     }
 }

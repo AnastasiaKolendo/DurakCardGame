@@ -10,16 +10,6 @@ public class User extends Player {
 
     @Override
     public Card attack(Suit trump) {
-        Comparator<Card> comparator = (c1, c2) -> {
-            if (c1.getSuit() == trump && c2.getSuit() != trump) {
-                return 1;
-            } else if (c1.getSuit() != trump && c2.getSuit() == trump) {
-                return -1;
-            } else {
-                return Integer.compare(c1.getRank().getValue(), c2.getRank().getValue());
-            }
-        };
-        hand.sort(comparator);
 
         System.out.println("Choose a card to attack:");
 
@@ -43,7 +33,6 @@ public class User extends Player {
         while (true) {
             String answer = new Scanner(System.in).nextLine().trim();
             if (answer.equalsIgnoreCase("get")) {
-                hand.add(againstCard);
                 return null;
             } else {
                 try {
@@ -53,7 +42,6 @@ public class User extends Player {
                     }
                     Card answerCard = hand.get(Integer.parseInt(answer) - 1);
                     if (answerCard.beats(againstCard, trump)) {
-                        hand.remove(Integer.parseInt(answer) - 1);
                         return answerCard;
                     } else {
                         System.out.println("You can't defend with this card, choose another one");
@@ -62,6 +50,41 @@ public class User extends Player {
                     System.out.println("Incorrect answer. Try again: ");
                 }
 
+            }
+        }
+    }
+
+    public Card tossCard(List<Card> cardList) {
+        System.out.println("Choose a card to toss or enter 'not' to finish the round: ");
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println((i + 1) + ". " + hand.get(i));
+        }
+        while (true) {
+            String answer = new Scanner(System.in).nextLine().trim();
+            someLabel:
+            if (answer.equalsIgnoreCase("not")) {
+                return null;
+            } else {
+                try {
+                    int cardIndex = Integer.parseInt(answer);
+                    while (cardIndex <= 0 || cardIndex > hand.size()) {
+                        System.out.println("Incorrect answer1. Try again: ");
+                        answer = new Scanner(System.in).nextLine().trim();
+                        cardIndex = Integer.parseInt(answer);
+                    }
+                    Card answerCard = hand.get(cardIndex - 1);
+                    while (true) {
+                        for (Card card : cardList) {
+                            if (answerCard.getRank().getValue() == card.getRank().getValue()) {
+                                return answerCard;
+                            }
+                        }
+                        System.out.println("Incorrect answer2. Try again: ");
+                        break someLabel;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Incorrect answer3. Try again: ");
+                }
             }
         }
     }
