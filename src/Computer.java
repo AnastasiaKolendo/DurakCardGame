@@ -1,4 +1,3 @@
-import sun.awt.geom.AreaOp;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -63,6 +62,7 @@ public class Computer extends Player{
                 return null;
             } else {
                 Card card = tossCards.get(index );
+                cardList.remove(card);
                 return card;
             }
         }
